@@ -87,6 +87,9 @@
     .description {
       font-size: 14px;
       color: #555;
+      max-width: calc(100% - 120px); /* Account for vertical line and right icons */
+      overflow-wrap: break-word;
+      margin-right: 10px;
     }
     .info-box {
       display: inline-block;
@@ -194,6 +197,10 @@
         justify-content: space-around;
         margin-top: 10px;
       }
+      .description {
+        max-width: 100%; /* Full width on small screens since vertical line is hidden */
+        margin-right: 0;
+      }
     }
   </style>
 </head>
@@ -232,14 +239,17 @@
           <img src="image/sort.png" class="icon-img" />
           <p class="action-label">Show All</p>
         </div>
+        <!-- Fifth Action -->
+        <div class="action-item" id="action-5">
+            <img src="image/sort.png" class="icon-img" alt="Icon 5">
+            <p class="action-label">Sort</p>
+        </div>
       </div>
 
       <!-- Main Content Area -->
       <div class="bottom-section" id="designer-container">
         <!-- JavaScript will populate content here -->
       </div>
-
-  
     </div>
   </div>
 
@@ -249,15 +259,15 @@
   let showingShortlisted = false;
 
   async function fetchDesigners() {
-  try {
-    const response = await fetch('https://emptycup-backend-ohux.onrender.com/designers');
-    designersData = await response.json();
-    console.log('Designer IDs:', designersData.map(d => typeof d.id)); // Debug type
-    renderDesigners(designersData);
-  } catch (error) {
-    console.error('Error fetching designers:', error);
+    try {
+      const response = await fetch('https://emptycup-backend-ohux.onrender.com/designers');
+      designersData = await response.json();
+      console.log('Designer IDs:', designersData.map(d => typeof d.id)); // Debug type
+      renderDesigners(designersData);
+    } catch (error) {
+      console.error('Error fetching designers:', error);
+    }
   }
-}
 
   // Render designers list given array
   function renderDesigners(data) {
@@ -285,6 +295,7 @@
 
       const bgClass = index % 2 === 0 ? 'cream-background' : '';
       const shortlistedClass = shortlistedIds.has(designer.id) ? 'shortlisted-highlight' : '';
+      const shortlistImage = shortlistedIds.has(designer.id) ? 'image/clicked.png' : 'image/unclicked.png';
 
       // Create main content container
       const mainContent = document.createElement('div');
@@ -312,7 +323,7 @@
             <div class="icon-label">Hide</div>
           </div>
           <div class="icon-set shortlist-btn" title="Shortlist">
-            <img src="image/save.png" class="icon-img" />
+            <img src="${shortlistImage}" class="icon-img" />
             <div class="icon-label">Shortlist</div>
           </div>
           <div class="icon-set report-btn" title="Report">
@@ -366,30 +377,33 @@
     mainContent.replaceWith(hiddenDiv);
   }
 
- // Toggle shortlist status for a designer
-function toggleShortlist(mainContent) {
-  const designerId = Number(mainContent.dataset.designerId); // Ensure number
-  if (shortlistedIds.has(designerId)) {
-    shortlistedIds.delete(designerId);
-    mainContent.classList.remove('shortlisted-highlight');
-  } else {
-    shortlistedIds.add(designerId);
-    mainContent.classList.add('shortlisted-highlight');
+  // Toggle shortlist status for a designer
+  function toggleShortlist(mainContent) {
+    const designerId = Number(mainContent.dataset.designerId); // Ensure number
+    const shortlistImg = mainContent.querySelector('.shortlist-btn .icon-img');
+    if (shortlistedIds.has(designerId)) {
+      shortlistedIds.delete(designerId);
+      mainContent.classList.remove('shortlisted-highlight');
+      shortlistImg.src = 'image/unclicked.png';
+    } else {
+      shortlistedIds.add(designerId);
+      mainContent.classList.add('shortlisted-highlight');
+      shortlistImg.src = 'image/clicked.png';
+    }
+    console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
   }
-  console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
-}
 
-// Show only shortlisted designers
-function showShortlisted() {
-  showingShortlisted = true;
-  document.getElementById('shortlisted-button').style.display = 'none';
-  document.getElementById('show-all-button').style.display = 'block';
+  // Show only shortlisted designers
+  function showShortlisted() {
+    showingShortlisted = true;
+    document.getElementById('shortlisted-button').style.display = 'none';
+    document.getElementById('show-all-button').style.display = 'block';
 
-  console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
-  const filtered = designersData.filter(d => shortlistedIds.has(Number(d.id))); // Ensure number
-  console.log('Filtered designers:', filtered); // Debug log
-  renderDesigners(filtered);
-}
+    console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
+    const filtered = designersData.filter(d => shortlistedIds.has(Number(d.id))); // Ensure number
+    console.log('Filtered designers:', filtered); // Debug log
+    renderDesigners(filtered);
+  }
 
   // Show all designers
   function showAll() {
