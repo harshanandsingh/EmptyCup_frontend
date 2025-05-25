@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmptyCup UI</title>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .phone-ui-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+    .phone-ui {
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+    .logo {
+      height: 30px;
+    }
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .menu-icon {
+      height: 25px;
+    }
+    .separator-line,
+    .separator-line1 {
+      border-top: 1px solid #eee;
+      margin: 10px 0;
+    }
+    .action-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 10px;
+      gap: 10px;
+    }
+    .action-item {
+      width: 30%;
+      text-align: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .action-label {
+      font-size: 14px;
+    }
+    .gold {
+      color: gold;
+    }
+    .dark {
+      color: #555;
+    }
+    .cream-background {
+      background-color: #fffcf2; /* a nice cream color */
+    }
+    .main-content {
+      position: relative;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      transition: all 0.3s ease;
+    }
+    .title-heading {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .rating-img {
+      height: 20px;
+      margin: 5px 0;
+    }
+    .description {
+      font-size: 14px;
+      color: #555;
+    }
+    .info-box {
+      display: inline-block;
+      width: 30%;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .info-box span {
+      display: block;
+      font-weight: normal;
+      font-size: 12px;
+    }
+    .phone-number {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .vertical-line {
+      position: absolute;
+      right: 100px;
+      top: 15px;
+      bottom: 15px;
+      width: 1px;
+      background: #ccc;
+    }
+    .right-icons {
+      position: absolute;
+      top: 15px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .icon-set {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .icon-img {
+      height: 20px;
+    }
+    .icon-label {
+      font-size: 10px;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+    .footer-text {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .arrow-img {
+      height: 20px;
+    }
+    /* Hide state style */
+    .hidden-content {
+      padding: 5px 15px;
+      border-bottom: 1px solid #eee;
+      font-style: italic;
+      background: #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+    }
+    .hidden-content span {
+      font-size: 14px;
+      color: #555;
+    }
+    .unhide-button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .unhide-button:hover {
+      background-color: #0056b3;
+    }
+    /* Shortlisted highlight */
+    .shortlisted-highlight {
+      border: 2px solid gold;
+    }
+
+    @media (max-width: 600px) {
+      .action-item {
+        width: 45%;
+      }
+      .info-box {
+        width: 32%;
+      }
+      .vertical-line {
+        display: none;
+      }
+      .right-icons {
+        position: static;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-ui-wrapper">
+    <div class="phone-ui">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <img src="image/logo.png" alt="Logo" class="logo" />
+        <div class="title">EmptyCup</div>
+        <img src="image/threedot.png" alt="Menu" class="menu-icon" />
+      </div>
+
+      <div class="separator-line"></div>
+
+      <!-- Actions -->
+      <div class="action-section">
+        <div class="action-item" id="contacts-action">
+          <img src="image/contact1.png" class="outer-icon" />
+          <img src="image/contact.png" class="inner-icon" />
+          <p class="action-label gold">Contacts</p>
+        </div>
+        <div class="action-item">
+          <img src="image/gallary.png" class="icon-img" />
+          <p class="action-label dark">Gallery</p>
+        </div>
+        <div class="action-item">
+          <img src="image/map.png" class="icon-img" />
+          <p class="action-label">Map</p>
+        </div>
+        <div class="action-item" id="shortlisted-button">
+          <img src="image/sortlisted.png" class="icon-img" />
+          <p class="action-label">Shortlisted</p>
+        </div>
+        <div class="action-item" id="show-all-button" style="display:none;">
+          <img src="image/sort.png" class="icon-img" />
+          <p class="action-label">Show All</p>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="bottom-section" id="designer-container">
+        <!-- JavaScript will populate content here -->
+      </div>
+
+  
+    </div>
+  </div>
+
+<script>
+  let designersData = [];
+  let shortlistedIds = new Set();
+  let showingShortlisted = false;
+
+  async function fetchDesigners() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/designers');
+    designersData = await response.json();
+    console.log('Designer IDs:', designersData.map(d => typeof d.id)); // Debug type
+    renderDesigners(designersData);
+  } catch (error) {
+    console.error('Error fetching designers:', error);
+  }
+}
+
+  // Render designers list given array
+  function renderDesigners(data) {
+    const container = document.getElementById('designer-container');
+    container.innerHTML = '';
+
+    data.forEach((designer, index) => {
+      const priceSymbol = '$'.repeat(designer.price_level);
+
+      // Star rendering logic
+      const fullStars = Math.floor(designer.stars);
+      const hasHalfStar = designer.stars % 1 >= 0.5;
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+      let starsHTML = '';
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += `<img src="image/SolidStar.svg" class="rating-img" />`;
+      }
+      if (hasHalfStar) {
+        starsHTML += `<img src="image/HalfStar.svg" class="rating-img" />`;
+      }
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += `<img src="image/HollowStar.svg" class="rating-img" />`;
+      }
+
+      const bgClass = index % 2 === 0 ? 'cream-background' : '';
+      const shortlistedClass = shortlistedIds.has(designer.id) ? 'shortlisted-highlight' : '';
+
+      // Create main content container
+      const mainContent = document.createElement('div');
+      mainContent.className = `main-content ${bgClass} ${shortlistedClass}`;
+      mainContent.dataset.designerId = designer.id;
+
+      // Fill inner HTML with designer info + buttons
+      mainContent.innerHTML = `
+        <div class="title-heading">${designer.name}</div>
+        <div class="rating-stars">${starsHTML}</div>
+        <p class="description">${designer.description}</p>
+        <div class="info-box">${designer.projects}<br><span>Projects</span></div>
+        <div class="info-box">${designer.years}<br><span>Years</span></div>
+        <div class="info-box">${priceSymbol}<br><span>Price</span></div>
+        <div class="phone-number">${designer.phone_1}</div>
+        <div class="phone-number">${designer.phone_2}</div>
+        <div class="vertical-line"></div>
+        <div class="right-icons">
+          <div class="icon-set details-btn" title="Details">
+            <img src="image/arrow.png" class="icon-img" />
+            <div class="icon-label">Details</div>
+          </div>
+          <div class="icon-set hide-btn" title="Hide">
+            <img src="image/eye.png" class="icon-img" />
+            <div class="icon-label">Hide</div>
+          </div>
+          <div class="icon-set shortlist-btn" title="Shortlist">
+            <img src="image/save.png" class="icon-img" />
+            <div class="icon-label">Shortlist</div>
+          </div>
+          <div class="icon-set report-btn" title="Report">
+            <img src="image/exmark.png" class="icon-img" />
+            <div class="icon-label">Report</div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(mainContent);
+    });
+
+    // After rendering, attach event listeners for buttons
+    attachEventListeners();
+  }
+
+  function attachEventListeners() {
+    document.querySelectorAll('.hide-btn').forEach(btn => {
+      btn.onclick = () => {
+        const mainContent = btn.closest('.main-content');
+        hideDesigner(mainContent);
+      };
+    });
+
+    document.querySelectorAll('.shortlist-btn').forEach(btn => {
+      btn.onclick = () => {
+        const mainContent = btn.closest('.main-content');
+        toggleShortlist(mainContent);
+      };
+    });
+  }
+
+  // Hide content and show a shrunk bar with Unhide button
+  function hideDesigner(mainContent) {
+    const designerId = mainContent.dataset.designerId;
+
+    // Create the hidden bar
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.className = 'hidden-content';
+    hiddenDiv.dataset.designerId = designerId;
+    hiddenDiv.innerHTML = `
+      <span>${mainContent.querySelector('.title-heading').textContent} (Hidden)</span>
+      <button class="unhide-button">Unhide</button>
+    `;
+
+    // Add unhide event listener
+    hiddenDiv.querySelector('.unhide-button').onclick = () => {
+      hiddenDiv.replaceWith(mainContent);
+    };
+
+    mainContent.replaceWith(hiddenDiv);
+  }
+
+ // Toggle shortlist status for a designer
+function toggleShortlist(mainContent) {
+  const designerId = Number(mainContent.dataset.designerId); // Ensure number
+  if (shortlistedIds.has(designerId)) {
+    shortlistedIds.delete(designerId);
+    mainContent.classList.remove('shortlisted-highlight');
+  } else {
+    shortlistedIds.add(designerId);
+    mainContent.classList.add('shortlisted-highlight');
+  }
+  console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
+}
+
+// Show only shortlisted designers
+function showShortlisted() {
+  showingShortlisted = true;
+  document.getElementById('shortlisted-button').style.display = 'none';
+  document.getElementById('show-all-button').style.display = 'block';
+
+  console.log('Shortlisted IDs:', Array.from(shortlistedIds)); // Debug log
+  const filtered = designersData.filter(d => shortlistedIds.has(Number(d.id))); // Ensure number
+  console.log('Filtered designers:', filtered); // Debug log
+  renderDesigners(filtered);
+}
+
+  // Show all designers
+  function showAll() {
+    showingShortlisted = false;
+    document.getElementById('shortlisted-button').style.display = 'flex';
+    document.getElementById('show-all-button').style.display = 'none';
+
+    renderDesigners(designersData);
+  }
+
+  document.getElementById('shortlisted-button').onclick = showShortlisted;
+  document.getElementById('show-all-button').onclick = showAll;
+
+  // On page load, fetch designers
+  fetchDesigners();
+</script>
+</body>
+</html>
